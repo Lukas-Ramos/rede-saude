@@ -7,12 +7,10 @@
     <label for="password">Senha</label>
     <input type="password" id="password" [(ngModel)]="password" name="password" required />
 
-    <button type="submit" class="button-entrar">Cadastrar</button>
+    <button type="submit" class="button-entrar">Cadastre-se</button>
   </form>
 
-  <!-- Exibe a mensagem de sucesso após o cadastro -->
   <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
   
-  <!-- Exibe a mensagem de erro caso haja -->
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 </div>
