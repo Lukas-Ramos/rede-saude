@@ -24,8 +24,45 @@ export class HomeComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.initMap();
+    this.carregarEstabelecimentos()
+    
   }
-
+  carregarEstabelecimentos() {
+    this.http.get<any[]>('http://localhost:3000/estabelecimentos').subscribe(
+      (response) => {
+        this.estabelecimentos = response;
+        this.atualizarMapaComEstabelecimentos(response);
+      },
+      (error) => {
+        console.error('Erro ao carregar os estabelecimentos', error);
+      }
+    );
+  }
+  
+  atualizarMapaComEstabelecimentos(estabelecimentos: any[]) {
+    // Limpar os marcadores anteriores no mapa
+    if (this.map) {
+      this.map.eachLayer((layer: any) => {
+        if (layer instanceof L.Marker) {
+          this.map.removeLayer(layer);
+        }
+      });
+  
+      // Adicionar os marcadores dos estabelecimentos ao mapa
+      estabelecimentos.forEach((estabelecimento) => {
+        const icon = L.icon({
+          iconUrl: estabelecimento.imagem || 'default-image-url.png',
+          iconSize: [40, 40],  
+          className: 'rounded-marker',
+        });
+  
+        L.marker([estabelecimento.latitude, estabelecimento.longitude], { icon })
+          .addTo(this.map)
+          .bindPopup(`<strong>${estabelecimento.nome}</strong>`)
+          .openPopup();
+      });
+    }
+  }
   initMap() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -64,7 +101,7 @@ export class HomeComponent implements AfterViewInit {
   
       const icon = L.icon({
         iconUrl: imagem || 'default-image-url.png',
-        iconSize: [40, 40], 
+        iconSize: [40, 40],  
         className: 'rounded-marker',
       });
   
@@ -73,13 +110,19 @@ export class HomeComponent implements AfterViewInit {
         .bindPopup(`<strong>${nome}</strong>`)
         .openPopup();
   
-      this.http.post('http://localhost:3000/estabelecimentos', this.novoEstabelecimento)
-        .subscribe((response) => {
+      // Enviar para a API
+      this.http.post('http://localhost:3000/estabelecimentos', this.novoEstabelecimento).subscribe(
+        (response) => {
           this.estabelecimentos.push({ ...this.novoEstabelecimento });
           this.novoEstabelecimento = { nome: '', imagem: '', latitude: null, longitude: null };
-        });
+        },
+        (error) => {
+          console.error('Erro ao cadastrar estabelecimento', error);
+        }
+      );
     }
   }
+  
 
   abrirNoGoogleMaps(latitude: number, longitude: number) {
     if (latitude && longitude) {
