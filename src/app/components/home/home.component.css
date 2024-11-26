@@ -1,83 +1,139 @@
-/* Estilo geral */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
 
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-}
+.container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    max-width: 80%;
+    margin: 0 auto;
+    background-color: #faedcd; 
+    border-radius: 10px;
+    box-shadow: 0 20px 200px rgba(0, 0, 0, 1);
 
-/* Conteúdo principal */
-.content {
-  padding: 10px;
-}
-
-/* Mapa */
-#map {
-  width: 100%;
-  height: 240px;
-  margin-bottom: 10px;
-}
-
-/* Navegação */
-.tabs {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.tabs button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #f1f1f1;
-  cursor: pointer;
-}
-
-.tabs button.active {
-  background-color: #4caf50;
-  color: white;
-}
-
-/* Formulário */
-.form {
-  margin-top: 10px;
-}
-
-.form form {
-  display: flex;
-  flex-direction: column;
-}
-
-.form input {
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form button {
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.form ul {
-  margin-top: 10px;
-  list-style: none;
-  padding: 0;
-}
-
-.form ul li {
-  padding: 5px 0;
-  border-bottom: 1px solid #ccc;
-}
+  }
+  
+  .container h1 {
+    color: #606C38;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  #map {
+    width: 100%;
+    height: 400px;
+    background-color: #f0f0f0;
+    border: 2px solid #606C38;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .form {
+    background-color: #606C38;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .form h2 {
+    color: #DDA15E;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .form input {
+    width: 98%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #FEFAE0;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #283618;
+    color: #FEFAE0;
+  }
+  
+  .form button {
+    background-color: #283618;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .form button:hover {
+    background-color: #BC6C25;
+  }
+  
+  .estabelecimentos {
+    margin-top: 30px;
+  }
+  
+  .estabelecimentos h2 {
+    color: #606C38;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .estabelecimento-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  .rounded-marker {
+    border-radius: 50%; 
+    overflow: hidden;  
+  }
+  .estabelecimento-card {
+    background-color: #FEFAE0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .estabelecimento-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .estabelecimento-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .estabelecimento-card strong {
+    display: block;
+    font-size: 1.2rem;
+    color: #606C38;
+    margin-bottom: 10px;
+  }
+  
+  .estabelecimento-card p {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .estabelecimento-card button {
+    background-color: #606C38;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .estabelecimento-card button:hover {
+    background-color: #5e33a6;
+  }
+  .Imagem do Estabelecimento{
+    width: 20px;
+  }
+  

@@ -1,54 +1,53 @@
+
 <div class="container">
-  <h1>Bem-vindo, {{ user.name }}</h1>
-
-  <div id="map"></div>
-
-  <div class="form">
-    <h2>Cadastrar Estabelecimento</h2>
-    <form>
-      <input
-        type="text"
-        placeholder="Nome do Estabelecimento"
-        [(ngModel)]="novoEstabelecimento.nome"
-        name="nome"
-        required
-      />
-
-      <input
-        type="text"
-        placeholder="URL da Imagem"
-        [(ngModel)]="novoEstabelecimento.imagem"
-        name="imagem"
-      />
-
-      <input
-        type="number"
-        placeholder="Latitude"
-        [(ngModel)]="novoEstabelecimento.latitude"
-        name="latitude"
-        required
-      />
-
-      <input
-        type="number"
-        placeholder="Longitude"
-        [(ngModel)]="novoEstabelecimento.longitude"
-        name="longitude"
-        required
-      />
-
-      <button type="button" (click)="cadastrarEstabelecimento()">Cadastrar</button>
-    </form>
-  </div>
-
-  <div class="estabelecimentos">
-    <h2>Estabelecimentos Cadastrados</h2>
-    <ul>
-      <li *ngFor="let estabelecimento of estabelecimentos">
-        <strong>{{ estabelecimento.nome }}</strong>
-        <img [src]="estabelecimento.imagem" alt="Imagem do Estabelecimento" />
-        <p>Localização: {{ estabelecimento.latitude }}, {{ estabelecimento.longitude }}</p>
-      </li>
-    </ul>
+    <h1>Bem-vindo, {{ user.name }}</h1>
+    <div id="map"></div>
+    <div class="form">
+      <h2>Cadastrar Estabelecimento</h2>
+      <form>
+        <input
+          type="text"
+          placeholder="Nome do Estabelecimento"
+          [(ngModel)]="novoEstabelecimento.nome"
+          name="nome"
+          required
+        />
+        <input
+          type="text"
+          placeholder="URL da Imagem"
+          [(ngModel)]="novoEstabelecimento.imagem"
+          name="imagem"
+        />
+        <input
+          type="number"
+          placeholder="Latitude"
+          [(ngModel)]="novoEstabelecimento.latitude"
+          name="latitude"
+          required
+        />
+        <input
+          type="number"
+          placeholder="Longitude"
+          [(ngModel)]="novoEstabelecimento.longitude"
+          name="longitude"
+          required
+        />
+        <button type="button" (click)="cadastrarEstabelecimento()">Cadastrar</button>
+      </form>
+    </div>
+    <div class="estabelecimentos">
+  <h2>Estabelecimentos Cadastrados</h2>
+  <div class="estabelecimento-grid">
+    <div class="estabelecimento-card" *ngFor="let estabelecimento of estabelecimentos">
+      <strong>{{ estabelecimento.nome }}</strong>
+      <img [src]="estabelecimento.imagem" alt="Imagem do Estabelecimento" />
+      <p>Localização: {{ estabelecimento.latitude }}, {{ estabelecimento.longitude }}</p>
+      <button (click)="abrirNoGoogleMaps(estabelecimento.latitude, estabelecimento.longitude)">
+        Ver no Google Maps
+      </button>
+    </div>
   </div>
 </div>
+
+      
+  </div>
