@@ -10,6 +10,7 @@
     <button type="submit" class="button-entrar">Entrar</button>
   </form>
 
-  <!-- Exibe a mensagem de erro caso as credenciais estejam incorretas -->
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <p>Não possui cadastro? <a style="color: lightyellow;" href="/cadastro">Cadastre-se</a></p>
 </div>
