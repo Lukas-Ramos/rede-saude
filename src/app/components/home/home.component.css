@@ -35,12 +35,13 @@
   }
   
   .form h2 {
-    color: #DDA15E;
+    color: #faedcd;
     margin-bottom: 15px;
     text-align: center;
+    font-size: 40px;
   }
   .form h3 {
-    color: #DDA15E;
+    color: #faedcd;
     margin-bottom: 15px;
     text-align: center;
   }
@@ -61,7 +62,7 @@
     color: #fefae0;
     border: none;
     padding: 10px 20px;
-    font-size: 1rem;
+    font-size: 30px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -77,6 +78,7 @@
   
   .estabelecimentos h2 {
     color: #606C38;
+    font-size: 40px;
     text-align: center;
     margin-bottom: 20px;
   }
@@ -91,7 +93,7 @@
     overflow: hidden;  
   }
   .estabelecimento-card {
-    background-color: #FEFAE0;
+    background-color: #606C38;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 15px;
@@ -114,19 +116,18 @@
   
   .estabelecimento-card strong {
     display: block;
-    font-size: 1.2rem;
-    color: #606C38;
+    font-size: 24px;
+    color: #faedcd;
     margin-bottom: 10px;
   }
   
   .estabelecimento-card p {
     font-size: 0.9rem;
-    color: #555;
   }
   
   .estabelecimento-card button {
-    background-color: #606C38;
-    color: #fff;
+    background-color: #283618;
+    color: #faedcd;
     border: none;
     margin: 10px;
     padding: 8px 15px;
@@ -180,4 +181,68 @@
       transform: rotate(360deg);
     }
   }
-  
+  .icon-button {
+  font-size: 18px;
+  background-color: #535c66;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.icon-gallery {
+  display: flex;
+  flex-wrap: wrap; 
+  background-color: #283618;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  gap: 28px;
+  justify-content: center; 
+  margin-top: 10px;
+  position: relative;
+  width: 620px;
+  max-height: 200px; 
+  overflow-y: auto;
+}
+
+.icon-item-menu:hover {
+  transform: scale(1.9);
+}
+.icon-item-menu{
+  font-size: 30px;
+  color: #faedcd;
+  transition: transform 0.1s ease;
+
+}
+
+.icon-Cadastrados{
+  font-size: 60px;
+  color: #faedcd;
+}
+
+.input-none{
+  display: none;
+}
+.fa-image{
+  color: #faedcd;
+  font-size: 30px;
+}
+p{
+  font-size: 18px;
+  font-weight: bold;
+  color: #faedcd;
+}
+.selecionar-icone{
+  justify-content: space-between;
+}
+.icon{
+  font-size: 60px;
+  color: #faedcd;
+}
+
+
+
+
+
+
