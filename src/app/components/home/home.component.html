@@ -1,41 +1,49 @@
 
+<div [class.hidden]="!isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+</div>
+
 <div class="container">
     <h1>Bem-vindo, {{ user.name }}</h1>
     <div id="map"></div>
     <div class="form">
       <h2>Cadastrar Estabelecimento</h2>
-      <form>
-        <input
-          type="text"
-          placeholder="Nome do Estabelecimento"
-          [(ngModel)]="novoEstabelecimento.nome"
-          name="nome"
-          required
-        />
-        <input
-          type="text"
-          placeholder="URL da Imagem"
-          [(ngModel)]="novoEstabelecimento.imagem"
-          name="imagem"
-        />
-        <input
-          type="number"
-          placeholder="Latitude"
-          [(ngModel)]="novoEstabelecimento.latitude"
-          name="latitude"
-          required
-        />
-        <input
-          type="number"
-          placeholder="Longitude"
-          [(ngModel)]="novoEstabelecimento.longitude"
-          name="longitude"
-          required
-        />
-        <button type="button" (click)="cadastrarEstabelecimento()">Cadastrar</button>
-
-
-      </form>
+      <div class="form">
+        <h3>Clique no mapa para selecionado a Localização</h3>
+        <form>
+          <input
+            type="text"
+            placeholder="Nome do Estabelecimento"
+            [(ngModel)]="novoEstabelecimento.nome"
+            name="nome"
+            required
+          />
+          <input
+            type="text"
+            placeholder="URL da Imagem"
+            [(ngModel)]="novoEstabelecimento.imagem"
+            name="imagem"
+          />
+          <input
+            type="number"
+            placeholder="Latitude"
+            [(ngModel)]="novoEstabelecimento.latitude"
+            name="latitude"
+            [readonly]="true"
+            required
+          />
+          <input
+            type="number"
+            placeholder="Longitude"
+            [(ngModel)]="novoEstabelecimento.longitude"
+            name="longitude"
+            [readonly]="true"
+            required
+          />
+          <button type="button" (click)="cadastrarEstabelecimento()">Cadastrar</button>
+        </form>
+      </div>
+      
     </div>
     <div class="estabelecimentos">
   <h2>Estabelecimentos Cadastrados</h2>
@@ -46,6 +54,9 @@
       <p>Localização: {{ estabelecimento.latitude }}, {{ estabelecimento.longitude }}</p>
       <button (click)="abrirNoGoogleMaps(estabelecimento.latitude, estabelecimento.longitude)">
         Ver no Google Maps
+      </button>
+       <button (click)="excluirEstabelecimento(estabelecimento.id)">
+        Excluir
       </button>
     </div>
   </div>

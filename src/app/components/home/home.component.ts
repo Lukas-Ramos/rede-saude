@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';  // Importando o HttpClient
+import { HttpClient } from '@angular/common/http';  
 
 declare let L: any;
 
@@ -19,18 +19,22 @@ export class HomeComponent implements AfterViewInit {
   estabelecimentos: any[] = [];
   novoEstabelecimento = { nome: '', imagem: '', latitude: null, longitude: null };
   private map: any;
+  private tempMarker: any = null;
+  isLoading: boolean = false;
+
 
   constructor(private router: Router, private http: HttpClient) {}
 
   ngAfterViewInit() {
     this.initMap();
-    this.carregarEstabelecimentos()
+    this.carregarEstabelecimentos();
     
   }
   carregarEstabelecimentos() {
     this.http.get<any[]>('http://localhost:3000/estabelecimentos').subscribe(
       (response) => {
         this.estabelecimentos = response;
+  
         this.atualizarMapaComEstabelecimentos(response);
       },
       (error) => {
@@ -40,7 +44,6 @@ export class HomeComponent implements AfterViewInit {
   }
   
   atualizarMapaComEstabelecimentos(estabelecimentos: any[]) {
-    // Limpar os marcadores anteriores no mapa
     if (this.map) {
       this.map.eachLayer((layer: any) => {
         if (layer instanceof L.Marker) {
@@ -48,45 +51,74 @@ export class HomeComponent implements AfterViewInit {
         }
       });
   
-      // Adicionar os marcadores dos estabelecimentos ao mapa
       estabelecimentos.forEach((estabelecimento) => {
-        const icon = L.icon({
-          iconUrl: estabelecimento.imagem || 'default-image-url.png',
-          iconSize: [40, 40],  
-          className: 'rounded-marker',
-        });
+        if (estabelecimento.latitude && estabelecimento.longitude) {
+          const icon = L.icon({
+            iconUrl: estabelecimento.imagem || 'default-image-url.png',
+            iconSize: [40, 40],  
+            className: 'rounded-marker',
+          });
   
-        L.marker([estabelecimento.latitude, estabelecimento.longitude], { icon })
-          .addTo(this.map)
-          .bindPopup(`<strong>${estabelecimento.nome}</strong>`)
-          .openPopup();
+          L.marker([estabelecimento.latitude, estabelecimento.longitude], { icon })
+            .addTo(this.map)
+            .bindPopup(`<strong>${estabelecimento.nome}</strong>`)
+            .openPopup();
+        }
       });
     }
   }
-  initMap() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+
+
+initMap() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
         const userLat = position.coords.latitude;
         const userLon = position.coords.longitude;
         this.map = L.map('map').setView([userLat, userLon], 13);
-        
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(this.map);
-        
+
         L.marker([userLat, userLon])
           .addTo(this.map)
           .bindPopup('Você está aqui!')
           .openPopup();
-      }, (error) => {
+
+        this.map.on('click', (e: any) => {
+          const { lat, lng } = e.latlng;
+
+          this.novoEstabelecimento.latitude = lat;
+          this.novoEstabelecimento.longitude = lng;
+
+          if (this.tempMarker) {
+            this.map.removeLayer(this.tempMarker);
+          }
+
+          this.tempMarker = L.marker([lat, lng], { draggable: true }).addTo(this.map);
+
+          this.tempMarker.bindPopup('Local Temporário').openPopup();
+        });
+
+        this.carregarEstabelecimentos();
+      },
+      (error) => {
         console.error('Erro ao obter localização:', error);
         this.map = L.map('map').setView([51.505, -0.09], 13); 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(this.map);
-      });
-    }
+
+        this.carregarEstabelecimentos();
+      }
+    );
+  } else {
+    console.error('Geolocalização não é suportada por este navegador.');
   }
+}
+
+  
 
   selectTab(tab: string) {
     this.activeTab = tab;
@@ -96,12 +128,17 @@ export class HomeComponent implements AfterViewInit {
   }
 
   cadastrarEstabelecimento() {
-    if (this.novoEstabelecimento.latitude && this.novoEstabelecimento.longitude) {
+    if (
+      this.novoEstabelecimento.nome &&
+      this.novoEstabelecimento.imagem &&
+      this.novoEstabelecimento.latitude &&
+      this.novoEstabelecimento.longitude
+    ) {
       const { nome, imagem, latitude, longitude } = this.novoEstabelecimento;
   
       const icon = L.icon({
         iconUrl: imagem || 'default-image-url.png',
-        iconSize: [40, 40],  
+        iconSize: [40, 40],
         className: 'rounded-marker',
       });
   
@@ -110,18 +147,29 @@ export class HomeComponent implements AfterViewInit {
         .bindPopup(`<strong>${nome}</strong>`)
         .openPopup();
   
-      // Enviar para a API
+      this.isLoading = true; 
+  
       this.http.post('http://localhost:3000/estabelecimentos', this.novoEstabelecimento).subscribe(
         (response) => {
-          this.estabelecimentos.push({ ...this.novoEstabelecimento });
-          this.novoEstabelecimento = { nome: '', imagem: '', latitude: null, longitude: null };
+          setTimeout(() => { 
+            this.estabelecimentos.push({ ...this.novoEstabelecimento });
+            this.novoEstabelecimento = { nome: '', imagem: '', latitude: null, longitude: null };
+  
+            this.isLoading = false; 
+            this.atualizarMapaComEstabelecimentos(this.estabelecimentos);
+            this.carregarEstabelecimentos();
+          }, 1000); 
         },
         (error) => {
           console.error('Erro ao cadastrar estabelecimento', error);
+          this.isLoading = false; 
         }
       );
+    } else {
+      alert('Por favor, preencha todos os campos do estabelecimento.');
     }
   }
+  
   
 
   abrirNoGoogleMaps(latitude: number, longitude: number) {
@@ -133,6 +181,26 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
+  excluirEstabelecimento(id: number) {
+    if (!id) {
+      console.error('ID inválido para exclusão');
+      return;
+    }
+  
+    this.http.delete(`http://localhost:3000/estabelecimentos/${id}`).subscribe(
+      () => {
+        this.estabelecimentos = this.estabelecimentos.filter((est) => est.id !== id);
+  
+        this.atualizarMapaComEstabelecimentos(this.estabelecimentos);
+      },
+      (error) => {
+        console.error('Erro ao excluir estabelecimento', error);
+        alert('Erro ao excluir o estabelecimento. Tente novamente mais tarde.');
+      }
+    );
+  }
+  
+    
   logout() {
     this.router.navigate(['/login']);
   }
