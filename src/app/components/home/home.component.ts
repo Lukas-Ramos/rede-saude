@@ -15,13 +15,11 @@ declare let L: any;
 })
 export class HomeComponent implements AfterViewInit {
   user = { name: 'João Silva' };
-  activeTab: string = 'mapa';
   estabelecimentos: any[] = [];
   novoEstabelecimento = { nome: '', imagem: '', latitude: null, longitude: null };
   private map: any;
   private tempMarker: any = null;
   isLoading: boolean = false;
-
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -42,7 +40,6 @@ export class HomeComponent implements AfterViewInit {
       }
     );
   }
-  
   atualizarMapaComEstabelecimentos(estabelecimentos: any[]) {
     if (this.map) {
       this.map.eachLayer((layer: any) => {
@@ -50,7 +47,6 @@ export class HomeComponent implements AfterViewInit {
           this.map.removeLayer(layer);
         }
       });
-  
       estabelecimentos.forEach((estabelecimento) => {
         if (estabelecimento.latitude && estabelecimento.longitude) {
           const icon = L.icon({
@@ -67,7 +63,6 @@ export class HomeComponent implements AfterViewInit {
       });
     }
   }
-
 
 initMap() {
   if (navigator.geolocation) {
@@ -117,15 +112,6 @@ initMap() {
     console.error('Geolocalização não é suportada por este navegador.');
   }
 }
-
-  
-
-  selectTab(tab: string) {
-    this.activeTab = tab;
-    if (tab === 'mapa' && this.map) {
-      this.map.invalidateSize();
-    }
-  }
 
   cadastrarEstabelecimento() {
     if (
