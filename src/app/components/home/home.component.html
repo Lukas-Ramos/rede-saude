@@ -35,28 +35,34 @@
           required
         />
         <div class="form">
-          <p>Selecione o seu icone</p>
-          <input class="input-none"
-            type="text"
-            [(ngModel)]="novoEstabelecimento.imagem"
-            name="imagem"
-            readonly
-            required
-            [placeholder]="novoEstabelecimento.imagem ? '' : 'Selecione um ícone'"
-          />
-          <button (click)="toggleIconGallery()" class="icon-button ">
-            <span class="icon-container">
-              <i [class]="novoEstabelecimento.imagem || 'fas fa-image'"></i> 
-            </span>
-          </button>
-        
-          <div *ngIf="iconGalleryVisible" class="icon-gallery">
-            <div *ngFor="let icon of icons" (click)="selectIcon(icon)" class="icon-item-menu">
-              <i class="{{ icon }}"></i>
+          <p>Selecione o seu ícone</p>
+          <div class="icon-and-cadastrar">
+            <input
+              class="input-none"
+              type="text"
+              [(ngModel)]="novoEstabelecimento.imagem"
+              name="imagem"
+              readonly
+              required
+              [placeholder]="novoEstabelecimento.imagem ? '' : 'Selecione um ícone'"
+            />
+            <button (click)="toggleIconGallery()" class="icon-button">
+              <span class="icon-container">
+                <i [class]="novoEstabelecimento.imagem || 'fas fa-image'"></i>
+              </span>
+            </button>
+            <button type="button" (click)="cadastrarEstabelecimento()">Cadastrar</button>
+          </div>
+
+          <div *ngIf="iconGalleryVisible" class="icon-gallery-backdrop" (click)="toggleIconGallery()">
+            <div class="icon-gallery" (click)="$event.stopPropagation()">
+              <div *ngFor="let icon of icons" (click)="selectIcon(icon)" class="icon-item-menu">
+                <i class="{{ icon }}"></i>
+              </div>
+              <button class="close-btn" (click)="toggleIconGallery()">×</button>
             </div>
           </div>
         </div>
-        <button type="button" (click)="cadastrarEstabelecimento()">Cadastrar</button>
       </form>
     </div>
   </div>
@@ -66,7 +72,6 @@
     <div class="estabelecimento-grid">
       <div class="estabelecimento-card" *ngFor="let estabelecimento of estabelecimentos">
         <strong>{{ estabelecimento.nome }}</strong>
-        
         <i [class]="estabelecimento.imagem" class="icon"></i>
         <p>Localização: {{ estabelecimento.latitude }}, {{ estabelecimento.longitude }}</p>
         <button (click)="abrirNoGoogleMaps(estabelecimento.latitude, estabelecimento.longitude)">

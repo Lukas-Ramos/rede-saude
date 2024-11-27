@@ -32,3 +32,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
   color: #fefae0;
   text-decoration: none;
 }
+.icon-and-cadastrar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px; 
+}
