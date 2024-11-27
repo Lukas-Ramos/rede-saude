@@ -56,6 +56,7 @@
 
           <div *ngIf="iconGalleryVisible" class="icon-gallery-backdrop" (click)="toggleIconGallery()">
             <div class="icon-gallery" (click)="$event.stopPropagation()">
+               <p>fechar</p>
               <div *ngFor="let icon of icons" (click)="selectIcon(icon)" class="icon-item-menu">
                 <i class="{{ icon }}"></i>
               </div>
