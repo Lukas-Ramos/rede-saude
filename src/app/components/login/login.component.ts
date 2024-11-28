@@ -18,12 +18,13 @@ export class LoginComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  
   login() {
     if (!this.username || !this.password) {
       this.errorMessage = 'Por favor, preencha todos os campos!';
       return;
     }
-
+  
     this.http
       .get<any[]>(`http://localhost:3000/users?username=${this.username}&password=${this.password}`)
       .subscribe({
@@ -31,7 +32,7 @@ export class LoginComponent {
           if (users.length > 0) {
             this.errorMessage = '';
             localStorage.setItem('user', JSON.stringify(users[0])); 
-            this.router.navigate(['/home']); 
+            this.router.navigate(['/home']);
           } else {
             this.errorMessage = 'Credenciais inválidas. Tente novamente.';
           }

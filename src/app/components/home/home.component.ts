@@ -14,7 +14,7 @@ declare let L: any;
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements AfterViewInit {
-  user = { name: 'João Silva' };
+  user: any = { name: 'Usuário' }; 
   estabelecimentos: any[] = [];
   icons = [
    'fas fa-store', 
@@ -37,6 +37,16 @@ export class HomeComponent implements AfterViewInit {
 
   constructor(private router: Router, private http: HttpClient) {}
 
+ 
+ngOnInit() {
+  const userFromStorage = localStorage.getItem ('user'); 
+  if (userFromStorage) {
+    this.user = JSON.parse (userFromStorage); 
+  } else
+   {
+    this.user = { name: 'Usuário' };
+  }
+}
   ngAfterViewInit() {
     this.initMap();
     this.carregarEstabelecimentos();

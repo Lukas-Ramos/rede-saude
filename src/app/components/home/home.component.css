@@ -15,7 +15,9 @@
     color: #606C38;
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+    text-align: center;
+    margin: 0;
   }
   
   #map {
@@ -181,15 +183,30 @@
       transform: rotate(360deg);
     }
   }
-  .icon-button {
-  font-size: 18px;
-  background-color: #535c66;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+  .container-titulo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 9vh;
+    position: relative;
+    margin: 0;
+  }
+  
+  .icon-button-sair {
+    position: absolute;
+    right: 0px;
+    margin-top: 20px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    background-color: #283618;
+    color: #fefae0;
+    border: none;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
+  
 .icon-gallery-backdrop {
   position: fixed;
   top: 0;
