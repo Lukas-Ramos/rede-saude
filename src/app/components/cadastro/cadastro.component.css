@@ -3,7 +3,7 @@
     max-width: 800px;
     margin: 100px auto;
     padding: 20px;
-    background-color: #2c2c2c; 
+    background-color: #bc6c25; 
     border-radius: 15px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     font-family: "Lobster", sans-serif;
@@ -27,35 +27,25 @@
   .login-container input {
     width: 100%;
     margin-bottom: 15px;
-    border: 1px solid #444; 
+    border: 1px solid #432818; 
     border-radius: 8px; 
-    background-color: #3c3c3c; 
+    background-color: #d4a373; 
     color: #fff; 
     font-size: 16px;
     height: 28px;
-  }
-  
-  .login-container input:focus {
-    outline: none;
-    border-color: #6c63ff; 
-    box-shadow: 0 0 5px #6c63ff; 
   }
   
   .login-container button {
     
     width: 100%;
     padding: 10px;
-    background-color: #6c63ff; 
+    background-color: #432818; 
     border: none;
     border-radius: 8px; 
     color: #fff;
     font-size: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  .login-container button:hover {
-    background-color: #574fcc; 
   }
   
   .error {
